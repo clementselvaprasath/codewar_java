@@ -9,7 +9,7 @@ class DecomposeTest {
     public void test1() {
         Decompose d = new Decompose();
         long n = 60000000;
-        assertEquals("1 2 3 7 9", d.decompose((long)Math.pow(2,31)));
+        assertEquals("1 2 3 7 9", d.decompose(10));
 //        assertEquals(" ",d.decompose(12345));
     }
 }
