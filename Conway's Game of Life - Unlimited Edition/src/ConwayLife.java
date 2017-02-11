@@ -13,19 +13,19 @@ public class ConwayLife {
         int row;
         int col;
         int state;
+        int neighbor;
 
-        public Cell() {
-            row = 0;
-            col = 0;
-            state = 0;
-        }
-
-        public Cell(int r, int c) {
+        Cell(int r, int c) {
             setPos(r, c);
+            state = 0;
+            neighbor = 0;
         }
 
-        public Cell(int s) {
-            setState(s);
+        Cell(int colNum, int rowNum, int s) {
+            col = colNum;
+            row = rowNum;
+            state = s;
+            neighbor = 0;
         }
 
         void setPos(int r, int c) {
@@ -41,20 +41,8 @@ public class ConwayLife {
             return col;
         }
 
-        void setRow(int r) {
-            row = r;
-        }
-
-        void setCol(int c) {
-            col = c;
-        }
-
         int getState() {
             return state;
-        }
-
-        void setState(int s) {
-            state = s;
         }
 
         boolean isAlive() {
@@ -62,23 +50,33 @@ public class ConwayLife {
         }
 
         int getNeighborNum() {
-            return state / 16;
+            return neighbor;
+        }
+
+        void addNeighbor() {
+            neighbor += 1;
         }
 
         void die() {
             state = 0;
+            neighbor = 0;
         }
 
         void stay() {
-            state &= 1;
+            neighbor = 0;
         }
 
         void alive() {
             state = 1;
+            neighbor = 0;
         }
 
-        void addNeighbor() {
-            state += 16;
+        void moveDown() {
+            row += 1;
+        }
+
+        void moveRight() {
+            col += 1;
         }
     }
 
@@ -86,18 +84,13 @@ public class ConwayLife {
 //        draw(glider, generation);
         init_gameboard(glider);
         init_aliveCells();
+        System.out.println("initial board");
         drawBoard();
-//        System.out.println("initial board");
-//        drawBoard();
         while (generation > 0) {
             envole();
             --generation;
-//            System.out.println("after generation");
-//            drawBoard();
         }
-        int[][] res = getResult();
-//        draw(res, -1);
-        return res;
+        return getResult();
     }
 
     private static void draw(int[][] glider, int generation) {
@@ -186,8 +179,6 @@ public class ConwayLife {
     private static void envole() {
         affectedCells.clear();
         updateAliveCellNeighbor();
-//        System.out.println("after update " + affectedCells.size());
-//        drawBoard();
         checkAffectedCells();
         updateBorder();
     }
@@ -197,13 +188,6 @@ public class ConwayLife {
         if (!isRowEmpty(0)) {
             up = true;
 
-            aliveCells.forEach(
-                    cell -> cell.setRow(cell.getRow() + 1)
-            );
-//            for (int i = 0; i < aliveCells.size(); i++) {
-//                aliveCells.get(i);
-//                oriCell.setRow(oriCell.getRow() + 1);
-//                aliveCells.set(i, new Pair<>(oriCell.getKey() + 1, oriCell.getValue()));
         }
 
         if (!isRowEmpty(gameboard.size() - 1))
@@ -211,13 +195,6 @@ public class ConwayLife {
 
         if (!isColumnEmpty(0)) {
             left = true;
-//            for (int i = 0; i < aliveCells.size(); i++) {
-//                Pair<Integer, Integer> oriCell = aliveCells.get(i);
-//                aliveCells.set(i, new Pair<>(oriCell.getKey(), oriCell.getValue() + 1));
-//            }
-            aliveCells.forEach(
-                    cell -> cell.setCol(cell.getCol() + 1)
-            );
         }
 
 
@@ -228,21 +205,27 @@ public class ConwayLife {
     }
 
     private static boolean isColumnEmpty(int col) {
-        for (List<Cell> row : gameboard) {
-            if (row.get(col).isAlive())
-                return false;
-        }
-        return true;
+        return !gameboard.stream().anyMatch(row -> row.get(col).isAlive());
     }
 
     private static boolean isRowEmpty(int row) {
-
         ArrayList<Cell> cells = gameboard.get(row);
-        for (Cell i : cells) {
-            if (i.isAlive())
-                return false;
+        return !cells.stream().anyMatch(cell -> cell.isAlive());
+    }
+
+    private static void updateAliveCellNeighbor() {
+        for (Cell cell : aliveCells) {
+            int row = cell.getRow();
+            int col = cell.getCol();
+            addNeighbor(row - 1, col - 1);
+            addNeighbor(row - 1, col);
+            addNeighbor(row - 1, col + 1);
+            addNeighbor(row, col - 1);
+            addNeighbor(row, col + 1);
+            addNeighbor(row + 1, col - 1);
+            addNeighbor(row + 1, col);
+            addNeighbor(row + 1, col + 1);
         }
-        return true;
     }
 
     private static void checkAffectedCells() {
@@ -274,64 +257,67 @@ public class ConwayLife {
         cellToAdd.forEach(cell -> aliveCells.add(cell));
     }
 
-    private static void updateAliveCellNeighbor() {
-        for (Cell cell : aliveCells) {
-            int row = cell.getRow();
-            int col = cell.getCol();
-            addNeighbor(row - 1, col - 1);
-            addNeighbor(row - 1, col);
-            addNeighbor(row - 1, col + 1);
-            addNeighbor(row, col - 1);
-            addNeighbor(row, col + 1);
-            addNeighbor(row + 1, col - 1);
-            addNeighbor(row + 1, col);
-            addNeighbor(row + 1, col + 1);
-        }
+    private static Cell getCell(int row, int col) {
+        return gameboard.get(row).get(col);
     }
 
     private static void addNeighbor(int row, int col) {
-        System.out.println(row + ":" + col);
-        Cell cell = gameboard.get(row).get(col);
+        Cell cell = getCell(row, col);
         cell.addNeighbor();
         affectedCells.add(cell);
     }
 
     private static void init_gameboard(int[][] glider) {
         gameboard = new ArrayList<>(glider.length + 2);
-
+        int rowNum = 0;
+        int colNum;
         for (int[] aGlider : glider) {
             ArrayList<Cell> row = new ArrayList<>();
-            for (int i = 0; i < aGlider.length; i++) {
-               row.add(new Cell(aGlider[i]));
+            colNum = 0;
+            for (int state : aGlider) {
+                row.add(new Cell(colNum, rowNum, state));
+                ++colNum;
             }
             gameboard.add(row);
+            ++rowNum;
         }
-
         wrap_gameboard(true, true, true, true);
     }
 
     private static void wrap_gameboard(boolean up, boolean down, boolean left, boolean right) {
         if (up) {
-            gameboard.add(0, getNewRow(gameboard.get(0).size()));
+            gameboard.forEach(
+                    cellRow -> cellRow.forEach(
+                            Cell::moveDown
+                    )
+            );
+            gameboard.add(0, getNewRow(gameboard.get(0).size(), 0));
+
         }
 
         if (down) {
-            gameboard.add(getNewRow(gameboard.get(0).size()));
+            gameboard.add(getNewRow(gameboard.get(0).size(), gameboard.size()));
         }
 
         if (left) {
-            gameboard.forEach(x -> x.add(0, new Cell()));
+            gameboard.forEach(
+                    cellRow -> cellRow.forEach(
+                            Cell::moveRight
+                    )
+            );
+            gameboard.forEach(x -> x.add(0, new Cell(gameboard.indexOf(x), 0)));
         }
 
         if (right) {
-            gameboard.forEach(x -> x.add(new Cell()));
+            int col = gameboard.get(0).size();
+            gameboard.forEach(x -> x.add(new Cell(gameboard.indexOf(x), col)));
         }
     }
 
-    private static ArrayList<Cell> getNewRow(int len) {
+    private static ArrayList<Cell> getNewRow(int len, int row) {
         ArrayList<Cell> newRow = new ArrayList<>();
         for (int i = 0; i < len; i++) {
-            newRow.add(new Cell() );
+            newRow.add(new Cell(row, i));
         }
         return newRow;
     }

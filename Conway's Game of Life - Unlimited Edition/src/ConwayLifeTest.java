@@ -29,14 +29,24 @@ class ConwayLifeTest {
                         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1,}
                 }
         };
-//        LifeDebug.print(gliders[0]);
-        int[][] res = ConwayLife.getGeneration(gliders[0], 16);
-//        assertEquals(res, gliders[1]);
-//        drawArr(res);
-//        System.out.println();
-//        drawArr(gliders[1]);
         assertTrue(isEqual(gliders[1], ConwayLife.getGeneration(gliders[0], 16)));
+    }
 
+    @Test
+    public void test2() {
+        int[][][] gliders = {
+                {
+                        {1, 0, 0},
+                        {0, 1, 1},
+                        {1, 1, 0}
+                },
+                {
+                        {0, 1, 0},
+                        {0, 0, 1},
+                        {1, 1, 1}
+                }
+        };
+        assertTrue(isEqual(gliders[1], ConwayLife.getGeneration(gliders[0], 1)));
     }
 
     private static void drawArr(int[][] arr) {
