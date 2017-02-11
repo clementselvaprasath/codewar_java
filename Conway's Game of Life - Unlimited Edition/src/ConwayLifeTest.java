@@ -16,18 +16,26 @@ class ConwayLifeTest {
                 },
 
                 {
-                        {0, 1, 0},
-                        {0, 0, 1},
-                        {1, 1, 1}
+                        {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,},
+                        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,},
+                        {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0,},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1,}
                 }
         };
 //        LifeDebug.print(gliders[0]);
         int[][] res = ConwayLife.getGeneration(gliders[0], 16);
 //        assertEquals(res, gliders[1]);
-        drawArr(res);
-        System.out.println();
-        drawArr(gliders[1]);
-        assertTrue(res == gliders[1]);
+//        drawArr(res);
+//        System.out.println();
+//        drawArr(gliders[1]);
+        assertTrue(isEqual(gliders[1], ConwayLife.getGeneration(gliders[0], 16)));
 
     }
 
@@ -44,6 +52,16 @@ class ConwayLifeTest {
             System.out.println();
         }
 
+    }
+
+    private static boolean isEqual(int[][] lhs, int[][] rhs) {
+        for (int i = 0; i < lhs.length; i++) {
+            for (int j = 0; j < lhs[0].length; j++) {
+                if (lhs[i][j] != rhs[i][j])
+                    return false;
+            }
+        }
+        return true;
     }
 
 }
