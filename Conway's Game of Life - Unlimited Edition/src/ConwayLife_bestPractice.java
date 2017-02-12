@@ -5,8 +5,8 @@ import java.util.stream.Collectors;
 /**
  * Created by sher on 11/2/2017.
  * things to learn:
- *  1. didn't use array to represent world, which is more efficient
- *  2. override method make compare easier
+ * 1. didn't use array to represent world, which is more efficient
+ * 2. override method make compare easier
  */
 public class ConwayLife_bestPractice {
 
@@ -48,6 +48,7 @@ public class ConwayLife_bestPractice {
         return countAlive(cell.getNeighbours(), world) == 3;
     }
 
+
     private static boolean livesAnotherDay(Cell cell, Set<Cell> world) {
         long aliveNeighbours = countAlive(cell.getNeighbours(), world);
         return aliveNeighbours >= 2 && aliveNeighbours <= 3;
@@ -63,7 +64,6 @@ public class ConwayLife_bestPractice {
         int minX = world.stream().mapToInt(Cell::getX).min().getAsInt();
         int maxY = world.stream().mapToInt(Cell::getY).max().getAsInt();
         int minY = world.stream().mapToInt(Cell::getY).min().getAsInt();
-
         int rows = maxX - minX + 1;
         int columns = maxY - minY + 1;
 

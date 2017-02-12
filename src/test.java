@@ -12,10 +12,9 @@ public class test {
         List<Pair<Integer, Integer>> l = new ArrayList<>();
         l.add(new Pair<>(1, 2));
 
-        int[][] added = new int[5][5];
-        boolean b;
-        System.out.println(b);
-        System.out.println(added[1][1]);
+        HashSet<Integer> s = new HashSet<>();
+        s.add(3);
+        System.out.println(s.contains(3));
         //        l.removeIf(P -> P.equals(new Pair<>(1, 1)));
 //        System.out.println(p.equals(new Pair<>(1, 1)));
 //        System.out.println(l.size());
