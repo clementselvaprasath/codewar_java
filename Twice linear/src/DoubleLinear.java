@@ -1,34 +1,31 @@
-import apple.laf.JRSUIUtils;
-
 import java.util.*;
 
 /**
  * Created by sher on 12/2/2017.
+ * <p>
+ * holly fuck, spend quite a lot time optimization,
+ * and got the wrong time messure solution
  */
 public class DoubleLinear {
-    private static TreeSet<Integer> li = new TreeSet<>();
-    private static int curPos = 0;
-    private static int tarIndex = 0;
-    private static long get_time = 0;
-    private static long now = 0;
-    private static long total_time = 0;
+    private static SortedSet<Integer> li = new TreeSet<>();
+    private static int curPos;
 
     static {
         li.add(1);
     }
 
     public static int dblLinear(int n) {
-        get_time = 0;
-        total_time = System.currentTimeMillis();
-        System.out.println("target: " + n);
-        tarIndex = n;
-        if (curPos < n) {
-            calcTo(n);
-        }
+        initialize(n);
+        calcTo(n);
+        System.out.println(li.size());
+        return li.first();
 
-        total_time = System.currentTimeMillis() - total_time;
-        System.out.println(li.size() + " " + get_time / 1000 + " totalTime :" + total_time / 1000);
-        return getAt(n);
+    }
+
+    private static void initialize(int n) {
+        li.clear();
+        li.add(1);
+        curPos = 0;
     }
 
     private static int linear1(int in) {
@@ -42,33 +39,21 @@ public class DoubleLinear {
     private static void calcTo(int end) {
 
         while (curPos < end) {
-            int num = getAt(curPos);
-            li.add(linear1(num));
-            li.add(linear2(num));
-//            li.sort(Integer::compareTo);
+            int curNum = li.first();
+            addToSet(linear1(curNum));
+            addToSet(linear2(curNum));
+            removeFirst();
             ++curPos;
-            if (tarIndex < li.size()) {
-                if (linear1(num) > getAt(tarIndex))
-                    return;
-            }
         }
-
     }
 
-    private static int getAt(int index) {
-//        return li.get(index);
-        long sTime = System.currentTimeMillis();
-        Iterator<Integer> ite = li.iterator();
-        int i = index;
-        int result = 0;
-        while (i >= 0) {
-            result = ite.next();
-            --i;
-        }
-
-        long elaps = (System.currentTimeMillis() - sTime);
-        get_time += elaps;
-        return result;
+    private static void removeFirst() {
+        li.remove(li.first());
     }
+
+    private static void addToSet(int i) {
+        li.add(i);
+    }
+
 }
 
