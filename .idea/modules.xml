@@ -2,12 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/4 By 4 Skyscrapers/4 By 4 Skyscrapers.iml" filepath="$PROJECT_DIR$/4 By 4 Skyscrapers/4 By 4 Skyscrapers.iml" />
       <module fileurl="file://$PROJECT_DIR$/Codewar's style ranking system/Codewar's style ranking system.iml" filepath="$PROJECT_DIR$/Codewar's style ranking system/Codewar's style ranking system.iml" />
       <module fileurl="file://$PROJECT_DIR$/Conway's Game of Life - Unlimited Edition/Conway's Game of Life - Unlimited Edition.iml" filepath="$PROJECT_DIR$/Conway's Game of Life - Unlimited Edition/Conway's Game of Life - Unlimited Edition.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Decode the Morse code/Decode the Morse code.iml" filepath="$PROJECT_DIR$/Decode the Morse code/Decode the Morse code.iml" />
       <module fileurl="file://$PROJECT_DIR$/John and Ann sign up for Codewars/John and Ann sign up for Codewars.iml" filepath="$PROJECT_DIR$/John and Ann sign up for Codewars/John and Ann sign up for Codewars.iml" />
       <module fileurl="file://$PROJECT_DIR$/Square into Squares. Protect trees!/Square into Squares. Protect trees!.iml" filepath="$PROJECT_DIR$/Square into Squares. Protect trees!/Square into Squares. Protect trees!.iml" />
       <module fileurl="file://$PROJECT_DIR$/Twice linear/Twice linear.iml" filepath="$PROJECT_DIR$/Twice linear/Twice linear.iml" />
       <module fileurl="file://$PROJECT_DIR$/Weight for weight/Weight for weight.iml" filepath="$PROJECT_DIR$/Weight for weight/Weight for weight.iml" />
+      <module fileurl="file://$PROJECT_DIR$/catch that cow/catch that cow.iml" filepath="$PROJECT_DIR$/catch that cow/catch that cow.iml" />
       <module fileurl="file://$PROJECT_DIR$/codewar_java.iml" filepath="$PROJECT_DIR$/codewar_java.iml" />
     </modules>
   </component>

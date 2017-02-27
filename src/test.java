@@ -15,6 +15,11 @@ public class test {
         HashSet<Integer> s = new HashSet<>();
         s.add(3);
         System.out.println(s.contains(3));
+
+        testClass t = new testClass();
+        t.print();
+        testClass.p();
+
         //        l.removeIf(P -> P.equals(new Pair<>(1, 1)));
 //        System.out.println(p.equals(new Pair<>(1, 1)));
 //        System.out.println(l.size());
