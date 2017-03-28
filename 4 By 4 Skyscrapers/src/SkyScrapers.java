@@ -105,7 +105,7 @@ public class SkyScrapers {
             return new int[]{clue[index], clue[SIZE * 3 - 1 - index]};
     }
 
-    static void buildCombinationTB() {
+    private static void buildCombinationTB() {
         combiTB = new HashMap<>();
         List<int[]> combi = getAllCombination();
         combi.forEach(
